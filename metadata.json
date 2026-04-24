@@ -1,0 +1,7 @@
+{
+  "name": "Remix: مركز نور الماسي - Noor Al-Masi Center",
+  "description": "Professional technical service center for car inspection, programming, and maintenance in Madinah. أفضل مركز للفحص والبرمجة والصيانة في المدينة المنورة.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}

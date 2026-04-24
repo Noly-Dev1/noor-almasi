@@ -1,0 +1,9 @@
+{
+  "appId": "com.nooralmasi.app",
+  "appName": "مركز نور الماسي",
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https"
+  }
+}

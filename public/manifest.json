@@ -1,0 +1,16 @@
+{
+  "name": "مركز نور الماسي",
+  "short_name": "نور الماسي",
+  "description": "مركز متخصص في صيانة وبرمجة السيارات في المدينة المنورة",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#D4AF37",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

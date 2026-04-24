@@ -1,0 +1,39 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} { allow read, write: if false; }
+
+    function isSignedIn() { return request.auth != null; }
+    function isAdmin() {
+      return isSignedIn() && 
+             request.auth.token.email == "karimalqalish@gmail.com" && 
+             request.auth.token.get('email_verified', false) == true;
+    }
+
+    match /bookings/{bookingId} {
+      allow read: if isAdmin() || (isSignedIn() && resource.data.userId == request.auth.uid);
+      
+      allow create: if bookingId.size() <= 128 && 
+                      request.resource.data.keys().hasAll(['name', 'phone', 'service', 'date', 'time', 'status', 'createdAt', 'userId']) &&
+                      request.resource.data.status == 'pending' && 
+                      request.resource.data.createdAt == request.time &&
+                      (request.resource.data.userId == null || (isSignedIn() && request.resource.data.userId == request.auth.uid) || isAdmin());
+
+      allow update: if bookingId.size() <= 128 && (
+        isAdmin() || (
+          isSignedIn() && 
+          resource.data.userId == request.auth.uid &&
+          resource.data.status == 'pending' &&
+          request.resource.data.status == 'cancelled' &&
+          request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status'])
+        )
+      );
+
+      allow delete: if isAdmin();
+    }
+    
+    match /_connection_test_/{docId} {
+      allow read: if true;
+    }
+  }
+}
